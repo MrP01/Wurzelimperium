@@ -1,0 +1,49 @@
+!!! Wurzelimperium !!!
+by Peter Waldert
+Ver. 1.1
+
+Eventuell:
+-> Geany installieren
+   Aus dem Internet
+
+
+First-Play:
+-> 16 Karotten kaufen
+-> Und das mehrmals bis Level-up:
+	-> alle Karotten anpflanzen
+	-> alle ernten
+-> alle verkaufen
+-> Gurken kaufen
+
+
+Zum Spielen:
+-> Wurzelimperium.py ausführen
+-> anpflanzen:
+	-> auf ein Feld im Garten klicken
+-> ernten:
+	-> auf ein bewachsenes Feld ohne Zahl klicken
+-> Pflanze wechseln: Mausrad drehen
+-> "Kaufen" anklicken(rechte Maustaste für 1 oder linke für so viele wie möglich)
+-> "Verkaufen" anklicken(rechte Maustaste für 1 oder linke für so viele wie möglich)
+-> Level up:
+	-> bei Ernte bekommt man Xp, je nach Pflanzen-art
+	-> ab 50*([Level]**2) Xp zb.:
+		-> Level 1: 50 = 50*1*1
+		-> Level 2: 200 = 50*2*2
+
+
+Weitere Tipps:
+-> Um Spieler anzulegen:
+	-> In defs.py:
+		-> In neu():
+			-> s.add_spieler([name],[Gartenname])
+			-> Bsp. s.add_spieler("Peter","Garten")
+
+-> Daten löschen:
+	-> Data.txt löschen
+
+-> Cheat-Tasten herausfinden:
+	-> Idle aufrufen:
+	-> help() eintippen
+	-> pygame.locals eingeben
+	-> event-Zahl suchen
