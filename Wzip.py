@@ -16,9 +16,9 @@ class Server(object):
 
     def add_pflanze(self, name, preis, dauer, ertrag, xp, level=1):
         if name == "Olive":
-            self.pflanzen[name] = [preis, dauer, "k/Olive_k.png", ertrag, xp, level]
+            self.pflanzen[name] = [preis, dauer, "img/Gemuese/Olive_k.png", ertrag, xp, level]
         else:
-            self.pflanzen[name] = [preis, dauer, "k/" + name + "_k.gif", ertrag, xp, level]
+            self.pflanzen[name] = [preis, dauer, "img/Gemuese/" + name + "_k.gif", ertrag, xp, level]
 
     def __str__(self):
         return "Spieler: %s Spieler Pflanzen: %s Pflanzen" % (len(self.spieler), len(self.pflanzen))
@@ -142,7 +142,7 @@ class Feld(object):
 
     def blit(self, screen):
         if self.belegt_mit == None:
-            ima = pygame.transform.scale(pygame.image.load("k/entry.png"), (50, 50))
+            ima = pygame.transform.scale(pygame.image.load("img/Gemuese/entry.png"), (50, 50))
             screen.blit(ima, self.pos)
         else:
             bildname = self.garten.spieler.server.pflanzen[self.belegt_mit.name][2]
@@ -187,7 +187,7 @@ class Wimp(object):
         self.zeit = random.randint(200 * int(self.nett), 500 * int(self.nett))
         self.einkaufsliste = {}
         self.pos = [len(spieler.wimps) * 40, 600]
-        self.bild = "Wimps/Wimp" + str(random.randint(1, 5)) + ".png"
+        self.bild = "img/Wimps/Wimp" + str(random.randint(1, 5)) + ".png"
         for i in range(random.randint(1, 5)):
             pfla = random.choice(spieler.ftlap)
             self.einkaufsliste[pfla] = random.randint(50, 150) / server.pflanzen[pfla][5]

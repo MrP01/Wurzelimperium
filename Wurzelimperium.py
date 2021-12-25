@@ -38,10 +38,10 @@ server.selected_field = [0, 0]
 cheat4 = False
 cheat6 = "pflanzen"
 server.wachsen(WACHSTUM)
-sell = Superclass((900, 30), "Buttons/Sell.jpg")
-kaufen = Superclass((900, 60), "Buttons/Kaufen.jpg")
-nexpla = Superclass((0, 755), "Buttons/Next2.jpg")
-nexgar = Superclass((0, 779), "Buttons/Next2.jpg")
+sell = Superclass((900, 30), "img/Buttons/Sell.jpg")
+kaufen = Superclass((900, 60), "img/Buttons/Kaufen.jpg")
+nexpla = Superclass((0, 755), "img/Buttons/Next2.jpg")
+nexgar = Superclass((0, 779), "img/Buttons/Next2.jpg")
 timi = 0
 
 while True:
