@@ -31,6 +31,7 @@ if not success:
 cpn = "Peter"
 cgn = "Garden"
 cp = server.spieler[cpn]
+cp.wimps.append(Wimp(server, cp))
 cg = cp.gaerten[cgn]
 pfl = "Karotte"
 server.selected_field = [0, 0]
@@ -164,7 +165,6 @@ while True:
     timi += time_passed
     # if timi >= 10000:
     # if random.randint(1,100000) <= cp.beliebt:
-    # cp.wimps.append(Wimp(s,cp))
     screen.fill([0, 150, 0])
     cg.wachsen(WACHSTUM)
     screen.blit(f.render(pfl + " : " + str(server.pflanzen[pfl][0]) + " $", True, (0, 0, 0)), (500, 0))

@@ -42,8 +42,8 @@ def neu(s):
     s.add_pflanze("Lavendel", 6660, 7200, 8, 1440, 38)
     s.add_spieler("Peter", "Garden")
     s.add_spieler("Gartenzwerg Konrad", "Extrem Garten")
-    s.add_spieler("Joerg","Das Karee")
-    s.add_spieler("Lotti","Gemuesegarten")
+    s.add_spieler("Joerg", "Das Karee")
+    s.add_spieler("Lotti", "Gemuesegarten")
     s.add_spieler("Ute", "Blumenbeet")
 
 
