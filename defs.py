@@ -42,8 +42,9 @@ def neu(s):
     s.add_pflanze("Lavendel", 6660, 7200, 8, 1440, 38)
     s.add_spieler("Peter", "Garden")
     s.add_spieler("Gartenzwerg Konrad", "Extrem Garten")
-    # s.add_spieler("Joerg","Das Karee")
-    # s.add_spieler("Lotti","Gemuesegarten")
+    s.add_spieler("Joerg","Das Karee")
+    s.add_spieler("Lotti","Gemuesegarten")
+    s.add_spieler("Ute", "Blumenbeet")
 
 
 def save(obj, filename="Data.txt"):
@@ -51,12 +52,12 @@ def save(obj, filename="Data.txt"):
         pickle.dump(obj, f)
 
 
-def load(els, filename="Data.txt"):
+def load(fallback, filename="Data.txt"):
     try:
         with open(filename, "rb") as f:
-            return (pickle.load(), True)
-    except:
-        return (els, False)
+            return (pickle.load(f), True)
+    except pickle.PickleError:
+        return (fallback, False)
 
 
 def onfield(posof, pos, size):
