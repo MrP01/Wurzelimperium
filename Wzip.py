@@ -43,8 +43,8 @@ class Spieler(object):
         for item in list(self.inventar.keys()):
             if self.inventar[item] <= 0:
                 del self.inventar[item]
-        while self.xp >= 50 * (self.level ** 3):
-            self.xp -= 50 * (self.level ** 3)
+        while self.xp >= 50 * (self.level ** 2):
+            self.xp -= 50 * (self.level ** 2)
             self.level += 1
         for pflant in self.server.pflanzen.keys():
             if self.server.pflanzen[pflant][5] <= self.level and pflant not in self.ftlap:
@@ -99,7 +99,7 @@ class Spieler(object):
             self.gaerten[garten].wachsen(w)
 
     def __str__(self):
-        return "Geld: %s $ Gaerten: %s St�ck" % (self.geld, len(self.gaerten))
+        return "Geld: %s $ Gaerten: %s Stück" % (self.geld, len(self.gaerten))
 
 
 class Garten(object):
