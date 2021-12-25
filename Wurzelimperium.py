@@ -9,8 +9,13 @@ size = width, height = 1000, 800
 screen = pygame.display.set_mode(size)
 f = pygame.font.SysFont("Arial", 20)
 f2 = pygame.font.SysFont("Arial", 21)
-stick = pygame.joystick.Joystick(0)
-stick.init()
+
+try:
+    stick = pygame.joystick.Joystick(0)
+    stick.init()
+except pygame.error:
+    print("No joystick found, it will be pretty boring then")
+    stick = None
 
 CHEATS = False  # True = An; False = Aus
 WACHSTUM = 1000  # 100=Echtzeit; 1000=10*so schnell
@@ -19,7 +24,7 @@ clock = pygame.time.Clock()
 
 loaded = load(Server())
 s = loaded[0]
-if loaded[1] == False:
+if not loaded[1]:
     neu(s)
 cpn = "Peter"
 cgn = "Garden"
@@ -44,124 +49,124 @@ while True:
         if event.type == KEYDOWN and event.key == K_ESCAPE:
             save(s)
             exit()
-    if event.type == KEYDOWN:
-        cp.update()
-        if CHEATS == True:
-            if event.key == 282:
-                print("Cheat Pflanze")
-                if pfl in cp.inventar.keys():
-                    cp.inventar[pfl] += 1
-                else:
-                    cp.inventar[pfl] = 1
-            if event.key == 283:
-                print("Cheat Geld")
-                cp.geld += 500
-            if event.key == 284:
-                print("Cheat Level")
-                cp.level += 1
-                cp.update()
-            if event.key == 285:
-                print("Cheat Xp")
-                cp.xp += 1000
-                cp.update()
-            if event.key == 286:
-                if cheat4 == True:
-                    cheat4 = False
-                    print("Cheat Fertig aus")
-                else:
-                    print("Cheat Fertig an")
-                cheat4 = True
-        if event.key == 287:
-            print("Wachstums-Beschleunigung")
-            WACHSTUM += 50
-        if event.key == 288:
-            print("Garten anbauen")
-            if cheat6 == "pflanzen":
-                for feld in cg.felder.keys():
-                    cp.pflanzen(cgn, feld, pfl)
-                cheat6 = "ernten"
-            elif cheat6 == "ernten" and cg.felder[feld].belegt_mit != None:
-                for feld in cg.felder.keys():
-                    if cg.felder[feld].belegt_mit.gewachsen >= 100:
-                        cp.ernten(cgn, feld)
-            cheat6 = "pflanzen"
-        cp.update()
+        if event.type == KEYDOWN:
+            cp.update()
+            if CHEATS:
+                if event.key == 282:
+                    print("Cheat Pflanze")
+                    if pfl in cp.inventar.keys():
+                        cp.inventar[pfl] += 1
+                    else:
+                        cp.inventar[pfl] = 1
+                if event.key == 283:
+                    print("Cheat Geld")
+                    cp.geld += 500
+                if event.key == 284:
+                    print("Cheat Level")
+                    cp.level += 1
+                    cp.update()
+                if event.key == 285:
+                    print("Cheat Xp")
+                    cp.xp += 1000
+                    cp.update()
+                if event.key == 286:
+                    if cheat4:
+                        cheat4 = False
+                        print("Cheat Fertig aus")
+                    else:
+                        print("Cheat Fertig an")
+                    cheat4 = True
+            if event.key == 287:
+                print("Wachstums-Beschleunigung")
+                WACHSTUM += 50
+            if event.key == 288:
+                print("Garten anbauen")
+                if cheat6 == "pflanzen":
+                    for feld in cg.felder.keys():
+                        cp.pflanzen(cgn, feld, pfl)
+                    cheat6 = "ernten"
+                elif cheat6 == "ernten" and cg.felder[feld].belegt_mit != None:
+                    for feld in cg.felder.keys():
+                        if cg.felder[feld].belegt_mit.gewachsen >= 100:
+                            cp.ernten(cgn, feld)
+                cheat6 = "pflanzen"
+            cp.update()
 
-    if event.type == JOYAXISMOTION:
-        if event.axis == 0:
-            if event.value > 0 and s.selected_field[0] < 9:
-                s.selected_field[0] += 1
-            if event.value < 0 and s.selected_field[0] > 0:
-                s.selected_field[0] -= 1
-        if event.axis == 1:
-            if event.value > 0 and s.selected_field[1] < 9:
-                s.selected_field[1] += 1
-            if event.value < 0 and s.selected_field[1] > 0:
-                s.selected_field[1] -= 1
+        if event.type == JOYAXISMOTION:
+            if event.axis == 0:
+                if event.value > 0 and s.selected_field[0] < 9:
+                    s.selected_field[0] += 1
+                if event.value < 0 and s.selected_field[0] > 0:
+                    s.selected_field[0] -= 1
+            if event.axis == 1:
+                if event.value > 0 and s.selected_field[1] < 9:
+                    s.selected_field[1] += 1
+                if event.value < 0 and s.selected_field[1] > 0:
+                    s.selected_field[1] -= 1
 
-    if event.type == JOYBUTTONDOWN:
-        if event.button == 1:
-            if cg.felder[s.selected_field[0], s.selected_field[1]].belegt_mit != None:
-                if cheat4 == True:
-                    cg.felder[s.selected_field[0], s.selected_field[1]].belegt_mit.gewachsen = 100
-                if cg.felder[s.selected_field[0], s.selected_field[1]].belegt_mit.gewachsen >= 100:
-                    cp.ernten(cgn, tuple(s.selected_field))
+        if event.type == JOYBUTTONDOWN:
+            if event.button == 1:
+                if cg.felder[s.selected_field[0], s.selected_field[1]].belegt_mit != None:
+                    if cheat4:
+                        cg.felder[s.selected_field[0], s.selected_field[1]].belegt_mit.gewachsen = 100
+                    if cg.felder[s.selected_field[0], s.selected_field[1]].belegt_mit.gewachsen >= 100:
+                        cp.ernten(cgn, tuple(s.selected_field))
+                else:
+                    cp.pflanzen(cgn, tuple(s.selected_field), pfl)
+                if not stick.get_button(0):
+                    if event.button == 3:
+                        cp.sell(pfl)
+                    if event.button == 2:
+                        cp.buy(pfl)
             else:
-                cp.pflanzen(cgn, tuple(s.selected_field), pfl)
-            if not stick.get_button(0):
                 if event.button == 3:
-                    cp.sell(pfl)
+                    cp.sell(pfl, cp.inventar[pfl])
                 if event.button == 2:
+                    cp.buy(pfl, cp.geld / s.pflanzen[pfl][0])
+                if event.button == 5:
+                    pfl = nexter(cp.ftlap, pfl)
+                if event.button == 4:
+                    pfl = beforer(cp.ftlap, pfl)
+
+        if event.type == MOUSEBUTTONDOWN:
+            mp = pygame.mouse.get_pos()
+            if event.button == 1:
+                if onfield(mp, cg.pos, (500, 500)):
+                    xx = (mp[0] - cg.pos[0]) // 50
+                    yy = (mp[1] - cg.pos[1]) // 50
+                    if cheat4 and cg.felder[xx, yy].belegt_mit != None:
+                        cg.felder[xx, yy].belegt_mit.gewachsen = 100
+                    else:
+                        cp.pflanzen(cgn, (xx, yy), pfl)
+                if onfield(mp, (900, 30), (100, 30)):
+                    cp.sell(pfl)
+                if onfield(mp, (900, 60), (100, 30)):
                     cp.buy(pfl)
-        else:
+                if onfield(mp, cg.pos, (500, 500)):
+                    xx = (mp[0] - cg.pos[0]) // 50
+                    yy = (mp[1] - cg.pos[1]) // 50
+                    cp.ernten(cgn, (xx, yy))
+                if onfield(mp, (0, 755), (28, 21)):
+                    cpn = nexter(s.spieler.keys(), cpn)
+                    cp = s.spieler[cpn]
+                    cgn = cp.gaerten.keys()[0]
+                    cg = cp.gaerten[cgn]
+                    pfl = "Karotte"
+                    WACHSTUM = 100
+                # if onfield(mp,(0,600),(800,60)):
+
+                if onfield(mp, (0, 779), (28, 21)):
+                    cgn = nexter(cp.gaerten.keys(), cgn)
+                    cg = cp.gaerten[cgn]
             if event.button == 3:
-                cp.sell(pfl, cp.inventar[pfl])
-            if event.button == 2:
-                cp.buy(pfl, cp.geld / s.pflanzen[pfl][0])
-            if event.button == 5:
-                pfl = nexter(cp.ftlap, pfl)
+                if onfield(mp, (900, 30), (100, 30)):
+                    cp.sell(pfl, cp.inventar[pfl])
+                if onfield(mp, (900, 60), (100, 30)):
+                    cp.buy(pfl, cp.geld / s.pflanzen[pfl][0])
             if event.button == 4:
+                pfl = nexter(cp.ftlap, pfl)
+            if event.button == 5:
                 pfl = beforer(cp.ftlap, pfl)
-
-    if event.type == MOUSEBUTTONDOWN:
-        mp = pygame.mouse.get_pos()
-        if event.button == 1:
-            if onfield(mp, cg.pos, (500, 500)) == True:
-                xx = (mp[0] - cg.pos[0]) / 50
-                yy = (mp[1] - cg.pos[1]) / 50
-                if cheat4 == True and cg.felder[xx, yy].belegt_mit != None:
-                    cg.felder[xx, yy].belegt_mit.gewachsen = 100
-                else:
-                    cp.pflanzen(cgn, (xx, yy), pfl)
-            if onfield(mp, (900, 30), (100, 30)) == True:
-                cp.sell(pfl)
-            if onfield(mp, (900, 60), (100, 30)) == True:
-                cp.buy(pfl)
-            if onfield(mp, cg.pos, (500, 500)) == True:
-                xx = (mp[0] - cg.pos[0]) / 50
-                yy = (mp[1] - cg.pos[1]) / 50
-                cp.ernten(cgn, (xx, yy))
-            if onfield(mp, (0, 755), (28, 21)) == True:
-                cpn = nexter(s.spieler.keys(), cpn)
-                cp = s.spieler[cpn]
-                cgn = cp.gaerten.keys()[0]
-                cg = cp.gaerten[cgn]
-                pfl = "Karotte"
-                WACHSTUM = 100
-            # if onfield(mp,(0,600),(800,60)) == True:
-
-            if onfield(mp, (0, 779), (28, 21)) == True:
-                cgn = nexter(cp.gaerten.keys(), cgn)
-                cg = cp.gaerten[cgn]
-        if event.button == 3:
-            if onfield(mp, (900, 30), (100, 30)) == True:
-                cp.sell(pfl, cp.inventar[pfl])
-            if onfield(mp, (900, 60), (100, 30)) == True:
-                cp.buy(pfl, cp.geld / s.pflanzen[pfl][0])
-        if event.button == 4:
-            pfl = nexter(cp.ftlap, pfl)
-        if event.button == 5:
-            pfl = beforer(cp.ftlap, pfl)
 
     time_passed = clock.tick(12)
     timi += time_passed
@@ -192,4 +197,5 @@ while True:
         nexpla.blit(screen)
         cg.blit(screen)
         cp.blitinv(screen, (700, 0), pfl)
-        pygame.display.flip()
+    # pygame.display.flip()
+    pygame.display.update()

@@ -1,4 +1,3 @@
-# -*- coding: cp1252 -*-
 import pygame, time, random
 
 
@@ -41,7 +40,7 @@ class Spieler(object):
         self.gaerten[gartenname] = Garten(self)
 
     def update(self):
-        for item in self.inventar.keys():
+        for item in list(self.inventar.keys()):
             if self.inventar[item] <= 0:
                 del self.inventar[item]
         while self.xp >= 50 * (self.level ** 3):
@@ -100,7 +99,7 @@ class Spieler(object):
             self.gaerten[garten].wachsen(w)
 
     def __str__(self):
-        return "Geld: %s $ Gaerten: %s Stück" % (self.geld, len(self.gaerten))
+        return "Geld: %s $ Gaerten: %s Stï¿½ck" % (self.geld, len(self.gaerten))
 
 
 class Garten(object):
