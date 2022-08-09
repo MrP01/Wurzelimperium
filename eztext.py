@@ -1,6 +1,8 @@
 # input lib
+import string
+
+import pygame
 from pygame.locals import *
-import pygame, string
 
 
 class ConfigError(KeyError):
@@ -34,7 +36,10 @@ class Input:
             ["y", "0"],
             ["font", "pygame.font.Font(None, 32)"],
             ["color", "(0,0,0)"],
-            ["restricted", "'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&\\'()*+,-./:;<=>?@[\]^_`{|}~'"],
+            [
+                "restricted",
+                "'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&\\'()*+,-./:;<=>?@[\]^_`{|}~'",
+            ],
             ["maxlength", "-1"],
             ["prompt", "''"],
         )

@@ -1,4 +1,7 @@
-import pygame, time, random
+import random
+import time
+
+import pygame
 
 
 class Server(object):
@@ -43,8 +46,8 @@ class Spieler(object):
         for item in list(self.inventar.keys()):
             if self.inventar[item] <= 0:
                 del self.inventar[item]
-        while self.xp >= 50 * (self.level ** 2):
-            self.xp -= 50 * (self.level ** 2)
+        while self.xp >= 50 * (self.level**2):
+            self.xp -= 50 * (self.level**2)
             self.level += 1
         for pflant in self.server.pflanzen.keys():
             if self.server.pflanzen[pflant][5] <= self.level and pflant not in self.ftlap:
@@ -149,7 +152,9 @@ class Feld(object):
             screen.blit(pygame.transform.scale(pygame.image.load(bildname), (50, 50)), self.pos)
             if self.belegt_mit.gewachsen <= 100:
                 f = pygame.font.SysFont("Arial", 20)
-                screen.blit(f.render(str(int(self.belegt_mit.gewachsen)), True, (0, 0, 0)), (self.pos[0] + 5, self.pos[1] + 5))
+                screen.blit(
+                    f.render(str(int(self.belegt_mit.gewachsen)), True, (0, 0, 0)), (self.pos[0] + 5, self.pos[1] + 5)
+                )
         if self.garten.spieler.server.selected_field == self.rowcol:
             pygame.draw.rect(screen, (0, 190, 0), pygame.Rect(self.pos, (49, 49)), 2)
 

@@ -1,8 +1,10 @@
-import pygame
 import logging
-from Wzip import *
+
+import pygame
+
 from defs import *
 from superclass import *
+from Wzip import *
 
 pygame.init()
 size = width, height = 1000, 800
